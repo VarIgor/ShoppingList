@@ -1,9 +1,7 @@
 package edu.example.shoppinglist.domain
 
-import edu.example.shoppinglist.data.ShopListRepositoryImpl
-
-class DeleteShopItemUseCase (private val shopListRepository: ShopListRepositoryImpl) {
-     fun deleteShopItem(shopItem: ShopItem){
+class DeleteShopItemUseCase(private val shopListRepository: ShopListRepository) {
+    fun deleteShopItem(shopItem: ShopItem) {
         shopListRepository.deleteShopItem(shopItem)
     }
 }
