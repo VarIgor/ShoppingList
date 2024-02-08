@@ -1,29 +1,36 @@
 package edu.example.shoppinglist.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.example.shoppinglist.R
-import edu.example.shoppinglist.domain.ShopItem
+import edu.example.shoppinglist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
         settingRecyclerView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.shopListLD.observe(this) {
+        viewModel.shopList.observe(this) {
             shopListAdapter.submitList(it)
         }
-        viewModel.getShopList()
+
+        val buttonAddItem = binding.buttonAddShopItem
+        buttonAddItem.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
+        }
 
     }
 
@@ -74,11 +81,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Toast.makeText(
-                this,
-                "This object is \n Id: ${it.id} \n Name: ${it.name} \n Count: ${it.count}",
-                Toast.LENGTH_LONG
-            ).show()
+            val intent = ShopItemActivity.newIntentEditItem(this, it.id)
+            startActivity(intent)
         }
     }
 
