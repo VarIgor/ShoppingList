@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "edu.example.shoppinglist"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -28,30 +28,39 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+    buildFeatures {
+        viewBinding = true
+    }
+
 }
 
 dependencies {
-    val room_version = "2.6.0"
-    val dagger_version = "2.48.1"
+    val room = "2.6.1"
+//    val dagger = "2.48.1"
+    val lifecycle = "2.7.0"
 
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room")
+    implementation("androidx.room:room-runtime:$room")
+    ksp("androidx.room:room-compiler:$room")
 
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle")
 
-//    implementation ("com.google.dagger:dagger:$dagger_version")
-//    kapt ("com.google.dagger:dagger-compiler:$dagger_version")
 
-    implementation("androidx.core:core-ktx:1.9.0")
+
+
+//    implementation ("com.google.dagger:dagger:$dagger")
+//    ksp ("com.google.dagger:dagger-compiler:$dagger")
+
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
