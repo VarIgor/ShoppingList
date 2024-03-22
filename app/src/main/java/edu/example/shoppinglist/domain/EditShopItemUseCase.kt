@@ -1,7 +1,7 @@
 package edu.example.shoppinglist.domain
 
 class EditShopItemUseCase(private val shopListRepository: ShopListRepository) {
-    fun editShopItem(shopItem: ShopItem) {
+    suspend fun editShopItem(shopItem: ShopItem) {
         shopListRepository.editShopItem(shopItem)
     }
 }
