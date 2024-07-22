@@ -2,6 +2,7 @@ package edu.example.shoppinglist.presentation.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import edu.example.shoppinglist.data.ShopListRepositoryImpl
@@ -9,18 +10,20 @@ import edu.example.shoppinglist.domain.DeleteShopItemUseCase
 import edu.example.shoppinglist.domain.EditShopItemUseCase
 import edu.example.shoppinglist.domain.GetShopListUseCase
 import edu.example.shoppinglist.domain.ShopItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel @Inject constructor(
+    private val getShopListUseCase: GetShopListUseCase,
+    private val editShopItemUseCase: EditShopItemUseCase,
+    private val deleteShopItemUseCase: DeleteShopItemUseCase
+) : ViewModel() {
 
-    private val repository = ShopListRepositoryImpl(application)
-
-    private val getShopListUseCase = GetShopListUseCase(repository)
-    private val editShopItemUseCase = EditShopItemUseCase(repository)
-    private val deleteShopItemUseCase = DeleteShopItemUseCase(repository)
+    //наследовались от AndroidViewModel(application), конструктор принемал application:Application
+//    private val repository = ShopListRepositoryImpl(application)
+//    private val getShopListUseCase = GetShopListUseCase(repository)
+//    private val editShopItemUseCase = EditShopItemUseCase(repository)
+//    private val deleteShopItemUseCase = DeleteShopItemUseCase(repository)
 
     val shopList = getShopListUseCase.getShopList().asLiveData()
 

@@ -42,7 +42,7 @@ android {
 
 dependencies {
     val room = "2.6.1"
-//    val dagger = "2.48.1"
+    val dagger = "2.51.1"
     val lifecycle = "2.7.0"
 
     implementation("androidx.room:room-ktx:$room")
@@ -55,10 +55,10 @@ dependencies {
 
 
 
-//    implementation ("com.google.dagger:dagger:$dagger")
-//    ksp ("com.google.dagger:dagger-compiler:$dagger")
+    implementation ("com.google.dagger:dagger:$dagger")
+    ksp ("com.google.dagger:dagger-compiler:$dagger")
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
