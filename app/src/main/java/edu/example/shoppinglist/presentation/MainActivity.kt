@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.example.shoppinglist.R
 import edu.example.shoppinglist.databinding.ActivityMainBinding
+import edu.example.shoppinglist.presentation.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 

@@ -14,6 +14,9 @@ import com.google.android.material.textfield.TextInputLayout
 import edu.example.shoppinglist.R
 import edu.example.shoppinglist.databinding.FragmentShopItemBinding
 import edu.example.shoppinglist.domain.ShopItem
+import edu.example.shoppinglist.presentation.viewModel.ShopItemViewModel
+
+
 
 class ShopItemFragment : Fragment() {
 
