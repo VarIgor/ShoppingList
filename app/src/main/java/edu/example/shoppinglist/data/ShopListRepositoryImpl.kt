@@ -14,12 +14,18 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.lang.RuntimeException
+import javax.inject.Inject
 import kotlin.random.Random
 
-class ShopListRepositoryImpl(application: Application) : ShopListRepository {
+class ShopListRepositoryImpl @Inject constructor(
+    private val shopListDao: ShopListDao,
+    private val mapper: ShopListMapper
+) : ShopListRepository {
 
-    private val shopListDao = AppDataBase.getInstance(application).shopListDao()
-    private val mapper = ShopListMapper()
+//    private val shopListDao = AppDataBase.getInstance(application).shopListDao()
+//    private val mapper = ShopListMapper()
+
+//    конструктор класса принимал application: Application
 
 //    private val shopListLD = MutableLiveData<List<ShopItem>>()
 //    private val shopList = sortedSetOf<ShopItem>({ o1, o2 -> o1.id.compareTo(o2.id) })

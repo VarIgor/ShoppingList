@@ -15,15 +15,24 @@ import edu.example.shoppinglist.R
 import edu.example.shoppinglist.databinding.FragmentShopItemBinding
 import edu.example.shoppinglist.domain.ShopItem
 import edu.example.shoppinglist.presentation.viewModel.ShopItemViewModel
-
+import edu.example.shoppinglist.presentation.viewModel.ViewModelFactory
+import javax.inject.Inject
 
 
 class ShopItemFragment : Fragment() {
 
     private lateinit var _binding: FragmentShopItemBinding
-    private val binding get() = _binding
+    private val binding
+        get() = _binding
 
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as ShopApplication).component
+    }
 
     private lateinit var viewModel: ShopItemViewModel
     private lateinit var tilName: TextInputLayout
@@ -44,6 +53,7 @@ class ShopItemFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        component.inject(this)
         super.onAttach(context)
         if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
@@ -54,7 +64,7 @@ class ShopItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[ShopItemViewModel::class.java]
         initViews()
         addTextChangeListeners()
         launchRightMode()

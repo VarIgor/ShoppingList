@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.example.shoppinglist.data.ShopListRepositoryImpl
 import edu.example.shoppinglist.domain.AddShopItemUseCase
@@ -11,15 +12,20 @@ import edu.example.shoppinglist.domain.EditShopItemUseCase
 import edu.example.shoppinglist.domain.GetShopItemUseCase
 import edu.example.shoppinglist.domain.ShopItem
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class ShopItemViewModel(application: Application): AndroidViewModel(application)  {
+class ShopItemViewModel @Inject constructor(
+    private val addShopItemUseCase: AddShopItemUseCase,
+    private val editShopItemUseCase: EditShopItemUseCase,
+    private val getShopItemUseCase: GetShopItemUseCase
+) : ViewModel()  {
+//наследовались от AndroidViewModel(application), конструктор принемал application:Application
+//    private val repository = ShopListRepositoryImpl(application)
+//    private val addShopItemUseCase = AddShopItemUseCase(repository),
+//    private val editShopItemUseCase = EditShopItemUseCase(repository),
+//    private val getShopItemUseCase = GetShopItemUseCase(repository)
 
-    private val repository = ShopListRepositoryImpl(application)
-
-    private val addShopItemUseCase = AddShopItemUseCase(repository)
-    private val editShopItemUseCase = EditShopItemUseCase(repository)
-    private val getShopItemUseCase = GetShopItemUseCase(repository)
 
     private val _errorInputName = MutableLiveData<Boolean>()
     val errorInputName: LiveData<Boolean>
@@ -78,7 +84,7 @@ class ShopItemViewModel(application: Application): AndroidViewModel(application)
     private fun parseCount(inputCount: String?): Int {
         return try {
             inputCount?.trim()?.toInt() ?: 0
-        }catch (e: Exception){
+        } catch (e: Exception) {
             0
         }
     }
@@ -104,7 +110,7 @@ class ShopItemViewModel(application: Application): AndroidViewModel(application)
         _errorInputCount.value = false
     }
 
-    private fun finishScreen(){
+    private fun finishScreen() {
         _shouldCloseScreen.value = Unit
     }
 }
